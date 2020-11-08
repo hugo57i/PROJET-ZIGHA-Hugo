@@ -41,6 +41,7 @@ class UserController
             "email" => $_ENV["EMAIL"] 
         ]));
         return $response
+        ->withHeader('Access-Control-Expose-Headers', '*')
         ->withHeader("Authorization", $token_jwt)
         ->withHeader("Content-Type", "application/json");
     }
