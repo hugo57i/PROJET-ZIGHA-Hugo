@@ -33,13 +33,13 @@ export class ConnexionComponent implements OnInit {
 
   public onSubmit(): void {
     this.userService.login(this.login, this.motDePasse).subscribe(data => {
-      console.log(data);
-      this.wrongLogs = data.success === true ? false : true;
-      if(data.success) {
+      this.wrongLogs = data.body.success === true ? false : true;
+      if(data.body.success) {
         localStorage.setItem('connected', 'true');
         localStorage.setItem('login', this.login);
+        localStorage.setItem('token', data.headers.get('Authorization'));
         this.alreadyConnected = true;
-      }
+      } 
     });
   }
 
