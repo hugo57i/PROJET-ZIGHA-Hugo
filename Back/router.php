@@ -20,7 +20,6 @@ return function(App $app){
     $app->group('/users', function (Group $group) {
         $group->post('/login', UserController::class . ":login");
         $group->post('/register', UserController::class . ":register");
-        $group->get('/infos/{login}', UserController::class . ":getUser");
     });
 
     $options = [
