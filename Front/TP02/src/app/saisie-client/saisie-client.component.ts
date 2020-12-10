@@ -108,7 +108,14 @@ export class SaisieClientComponent implements OnInit {
       telephone: this.telephone
     };
     this.userService.register(userInfos).subscribe(data => {
-      this.user = JSON.parse(data.user.user);
+      this.countries.map((country: any ) => {
+        if(country.name === data.user.pays) {
+          data.user.pays = country;
+        }
+      });
+      data.user.telephone = data.user.telephone.substr(data.user.telephone.length - 9);
+
+      this.user = data.user;
       this.notifierService.notify("success", "Votre compte a bien été créé !");
     });
     this.clearInputs();

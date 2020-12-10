@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../user';
+import countrydata from '../../assets/country.json';
 
 @Component({
   selector: 'app-recapitulatif-donnee',
@@ -12,6 +13,7 @@ export class RecapitulatifDonneeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }
