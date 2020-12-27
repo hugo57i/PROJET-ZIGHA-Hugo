@@ -14,7 +14,7 @@ export class ProductService {
 
 
   getAllProducts(): Observable<any> {
-      return this.http.get('/assets/catalogue.json');
+      return this.http.get("http://localhost:8080/catalogue");
   }
 
   async getOneProduct(id: number): Promise<Produit> {

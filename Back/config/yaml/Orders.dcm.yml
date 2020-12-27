@@ -1,0 +1,48 @@
+Orders:
+    type: entity
+    table: orders
+    indexes:
+        f_id_product:
+            columns:
+                - id_produit
+        f_id_client:
+            columns:
+                - id_client
+    id:
+        idCommande:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_Commande
+            generator:
+                strategy: IDENTITY
+    fields:
+        quantite:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+    manyToOne:
+        idClient:
+            targetEntity: Utilisateur
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_client:
+                    referencedColumnName: id
+            orphanRemoval: false
+        idProduit:
+            targetEntity: Products
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_produit:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

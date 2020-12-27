@@ -108,7 +108,7 @@ export class SaisieClientComponent implements OnInit {
       telephone: this.telephone
     };
     this.userService.register(userInfos).subscribe(data => {
-      this.countries.map((country: any ) => {
+      this.countries.map((country: {name: string, dial_code: string, code: string} ) => {
         if(country.name === data.user.pays) {
           data.user.pays = country;
         }
