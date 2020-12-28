@@ -4,6 +4,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use App\Controllers\HomeController;
 use App\Controllers\UserController;
 use App\Controllers\ProductController;
+use App\Controllers\OrderController;
 use Slim\App;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -23,6 +24,7 @@ return function(App $app){
         $group->post('/register', UserController::class . ":register");
     });
     $app->get('/catalogue', ProductController::class . ":getAllProducts");
+    $app->post('/validateOrder', OrderController::class . ":validateOrder");
 
     $options = [
         "attribute" => "token",

@@ -43,7 +43,7 @@ class UserController
                 "email" => $utilisateur->getEmail()
             ],
             "iat" => $issuedAt,
-            "exp" => $issuedAt + 60
+            "exp" => $issuedAt + 600
         ];
 
         $token_jwt = JWT::encode($payload, $_ENV["JWT_SECRET"], "HS256");
@@ -115,9 +115,16 @@ class UserController
     }
 
     public function checkValues(array $user) {
-        return strpos($user['email'], ".") != false && strpos($user['email'], "@") != false &&
-        $user['nom'] != '' && $user['prenom'] != '' && $user['login'] != '' && $user['motDePasse'] != '' &&
-        $user['adresse'] != '' && $user['ville'] != '' && $user['codePostal'] != '' && 
-        $user['telephone'] != '' && strlen($user['telephone']) == 9;
+        return (!preg_match("/[a-zA-Z]{1,256}/", $user['civilite']) ||
+           !preg_match("/[A-Za-z]{1,256}/", $user['nom']) ||
+           !preg_match("/[A-Za-z]{1,256}/", $user['prenom']) ||
+           !preg_match("/[A-Za-z0-9 ]{1,256}/", $user['adresse']) ||
+           !preg_match("/[0-9]{10,16}/", ltrim($user['telephone'], '+')) ||
+           !preg_match("/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/", $user['email']) ||
+           !preg_match("/[0-9]{5}/", $user['codePostal']) ||
+           !preg_match("/[A-Za-z]{1,256}/", $user['ville']) ||
+           !preg_match("/[A-Za-z0-9]{8,256}/", $user['login']) ||
+           !preg_match("/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,256}/", $user['motDePasse']));
     }
+    
 }

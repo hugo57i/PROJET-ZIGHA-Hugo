@@ -1,15 +1,16 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import countrydata from '../../assets/country.json';
 import { User } from '../user';
 import { UserService } from '../user.service';
 import { NotifierService } from "angular-notifier";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-saisie-client',
   templateUrl: './saisie-client.component.html',
   styleUrls: ['./saisie-client.component.css']
 })
-export class SaisieClientComponent implements OnInit {
+export class SaisieClientComponent implements OnInit, OnDestroy {
   public submitted: boolean = false;
   public falseEmail: boolean = false;
   public countries: [] = countrydata;
@@ -26,6 +27,8 @@ export class SaisieClientComponent implements OnInit {
   public codePostal: string ;
   public pays: {name: string, dial_code: string, code: string} = countrydata[0];
   public telephone: string;
+
+  public registerSubscribe: Subscription;
 
   public user: User = {
     civilite: '',
@@ -48,6 +51,10 @@ export class SaisieClientComponent implements OnInit {
   constructor(public userService: UserService, public notifierService: NotifierService) { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+
   }
 
   public onValueChanged(event): void {
@@ -107,7 +114,7 @@ export class SaisieClientComponent implements OnInit {
       pays: this.pays,
       telephone: this.telephone
     };
-    this.userService.register(userInfos).subscribe(data => {
+    this.registerSubscribe = this.userService.register(userInfos).subscribe(data => {
       this.countries.map((country: {name: string, dial_code: string, code: string} ) => {
         if(country.name === data.user.pays) {
           data.user.pays = country;

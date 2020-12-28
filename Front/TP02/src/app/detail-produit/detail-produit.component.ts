@@ -25,9 +25,7 @@ export class DetailProduitComponent implements OnInit {
 
   async ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    await this.productService.getOneProduct(id).then((product) => {
-      this.product = product;
-    });
+    this.product = this.productService.getOneProduct(id);
   }
 
   public onAddToCart(): void {

@@ -19,17 +19,16 @@ export class ListeProduitComponent implements OnInit {
   constructor(public productService: ProductService) { }
 
   ngOnInit() {
-    this.productService.getAllProducts().subscribe((data) => {
-      this.products = data;
-      this.showedProducts = data;
-      this.products.map((product: Produit) => {
-        if (!this.categories.includes(product.categorie)) {
-          this.categories.push(product.categorie);
-        }
-        if (!this.types.includes(product.type)) {
-          this.types.push(product.type);
-        }
-      });
+    let data = this.productService.getProducts();
+    this.products = data;
+    this.showedProducts = data;
+    this.products.map((product: Produit) => {
+      if (!this.categories.includes(product.categorie)) {
+        this.categories.push(product.categorie);
+      }
+      if (!this.types.includes(product.type)) {
+        this.types.push(product.type);
+      }
     });
   }
 

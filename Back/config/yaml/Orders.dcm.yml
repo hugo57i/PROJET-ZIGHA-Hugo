@@ -16,8 +16,7 @@ Orders:
                 unsigned: false
             id: true
             column: id_Commande
-            generator:
-                strategy: IDENTITY
+
     fields:
         quantite:
             type: integer

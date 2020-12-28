@@ -12,17 +12,29 @@ export class ProductService {
   constructor(private http: HttpClient) {
    }
 
-
   getAllProducts(): Observable<any> {
       return this.http.get("http://localhost:8080/catalogue");
   }
 
-  async getOneProduct(id: number): Promise<Produit> {
-    return new Promise((resolve, reject) => {
-      const catalogue = this.http.get('/assets/catalogue.json');
-      catalogue.subscribe( products => {
-        resolve(products[id - 1]);
-      });
-    });
+  getOneProduct(id: number): Produit {
+    return this.products[id-1];
   }
+
+  public getProducts(): [] {
+    return this.products;
+  }
+
+  public setProducts(productsArray : []): void {
+    this.products = productsArray;
+  }
+
+  validateProduct(data : {productsIds: Object[]}): Observable<any> {
+    let body = new URLSearchParams();
+    body.set('login', localStorage.getItem("login"));
+    body.set('products', JSON.stringify(data));
+    return this.http.post<Object>("http://localhost:8080/validateOrder", body.toString(), { headers: 
+    { 'content-type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + localStorage.getItem("token") }, 
+    observe: 'response' });
+  }
+
 }

@@ -35,9 +35,10 @@
     <small [ngStyle]="{'margin-bottom': '0.5rem', 'margin-right': '10px'}">Total :</small>
     <h3 class="">{{total$}} €</h3>
   </div>
-  <button type="button" class="btn btn-primary">
-    Procéder au paiement
+  <button type="button" class="btn btn-primary" (click)="proceedPayment()">
+    Valider la commande
   </button>
 </div>
 
 <p *ngIf="nbProducts$ <= 0" class="text-empty">Votre panier est vide </p>
+<notifier-container></notifier-container>

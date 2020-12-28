@@ -59,6 +59,17 @@ class Orders
         return $this->idCommande;
     }
 
+      /**
+     * Get idCommande.
+     *
+     * @return int
+     */
+    public function setIdCommande($idCommande)
+    {
+        $this->idCommande = $idCommande;
+    }
+
+
     /**
      * Set quantite.
      *

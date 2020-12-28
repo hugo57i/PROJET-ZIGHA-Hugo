@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
 
 @Component({
@@ -6,11 +7,12 @@ import { UserService } from '../user.service';
   templateUrl: './connexion.component.html',
   styleUrls: ['./connexion.component.css']
 })
-export class ConnexionComponent implements OnInit {
+export class ConnexionComponent implements OnInit, OnDestroy {
 
   public login: string;
   public motDePasse: string;
 
+  public logsSubscribe: Subscription;
   public wrongLogs: boolean = false;
   public alreadyConnected: boolean = false;
 
@@ -23,6 +25,12 @@ export class ConnexionComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    if(this.logsSubscribe) {
+      this.logsSubscribe.unsubscribe();
+    }
+  }
+
   public checkValues(): boolean {
     if ( this.login && this.login !== '' && this.motDePasse
     && this.motDePasse !== '') {
@@ -32,7 +40,7 @@ export class ConnexionComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.userService.login(this.login, this.motDePasse).subscribe(data => {
+    this.logsSubscribe = this.userService.login(this.login, this.motDePasse).subscribe(data => {
       this.wrongLogs = data.body.success === true ? false : true;
       if(data.body.success) {
         localStorage.setItem('connected', 'true');
