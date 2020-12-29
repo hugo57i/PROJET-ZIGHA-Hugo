@@ -13,15 +13,15 @@ export class UserService {
   register(user: User): Observable<any> {
     let body = new URLSearchParams();
     body.set('user', JSON.stringify(user));
-    return this.http.post<User>("http://localhost:8080/users/register", body.toString(), { headers: 
-    { 'content-type': 'application/x-www-form-urlencoded' } });
+    return this.http.post<User>("https://projetzigbackbdd.herokuapp.com/users/register", body.toString(), { headers: 
+    { 'content-type': 'application/x-www-form-urlencoded' }, observe: 'response' });
   } 
 
   login(login: string, motDePasse: string): Observable<any> {
     let body = new URLSearchParams();
     body.set('login', login);
     body.set('password', motDePasse);
-    return this.http.post<Object>("http://localhost:8080/users/login", body.toString(), { headers: 
+    return this.http.post<Object>("https://projetzigbackbdd.herokuapp.com/users/login", body.toString(), { headers: 
     { 'content-type': 'application/x-www-form-urlencoded' }, observe: 'response' });
   } 
 }

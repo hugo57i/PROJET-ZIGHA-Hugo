@@ -13,7 +13,7 @@ export class ProductService {
    }
 
   getAllProducts(): Observable<any> {
-      return this.http.get("http://localhost:8080/catalogue");
+      return this.http.get("https://projetzigbackbdd.herokuapp.com/catalogue");
   }
 
   getOneProduct(id: number): Produit {
@@ -32,7 +32,7 @@ export class ProductService {
     let body = new URLSearchParams();
     body.set('login', localStorage.getItem("login"));
     body.set('products', JSON.stringify(data));
-    return this.http.post<Object>("http://localhost:8080/validateOrder", body.toString(), { headers: 
+    return this.http.post<Object>("https://projetzigbackbdd.herokuapp.com/validateOrder", body.toString(), { headers: 
     { 'content-type': 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer ' + localStorage.getItem("token") }, 
     observe: 'response' });
   }
