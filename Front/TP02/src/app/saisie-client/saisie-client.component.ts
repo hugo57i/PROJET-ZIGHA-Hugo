@@ -115,14 +115,7 @@ export class SaisieClientComponent implements OnInit, OnDestroy {
       telephone: this.telephone
     };
     this.registerSubscribe = this.userService.register(userInfos).subscribe(data => {
-      this.countries.map((country: {name: string, dial_code: string, code: string} ) => {
-        if(country.name === data.user.pays) {
-          data.user.pays = country;
-        }
-      });
-      data.user.telephone = data.user.telephone.substr(data.user.telephone.length - 9);
-
-      this.user = data.user;
+      this.user = data.body.user;
       this.notifierService.notify("success", "Votre compte a bien été créé !");
     });
     this.clearInputs();
